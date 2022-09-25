@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        Pokemon euskaldun
+        <button class="gorde">gorde</button>
+    </header>
+    <div class = 'wrapper'>
+        <div class = 'mapak'></div>
+        <div class = 'options'>
+            <ul>
+                <li id='paretak' class='aukerak'>Hormak</li>
+                <li id='pertsonak' class ='aukerak' >Pertsonak</li>
+                <li id='mapa-aldaketa' class = 'aukerak'>Mapa aldaketak</li>
+            </ul>
+        </div>
+        <div class = 'map' draggable = 'false'>
+            <table class = 'grid' draggable = 'false'>
+            </table>
+        </div>
+        <div class= 'form'>
+            <div class='formPerson'>
+                <div class = 'line'>
+                    <label for= 'izena'>Izena: </label>
+                    <input type= 'text' name='izena' id='izena'></input><br>
+                </div>
+                
+                <div class = 'line'>
+                    <label for= 'x'>X: </label>
+                    <input type= 'number' name='x' id='x' class="number"></input><br>
+                </div>
+                
+                <div class = 'line'>
+                    <label for= 'y'>Y: </label>
+                    <input type= 'number' name='y' id='y' width="30px" class="number"></input><br>
+                </div>
+                
+                <div class = 'line'>
+                    <label for= 'skin'>Skin: </label>
+                    <select id="skin" name="skin">
+                    </select><br>
+                </div>
+                
+                <div class = 'line'>
+                    <label for="kontrolatua">Kontrolatua</label>
+                    <input type="checkbox" name='kontrolatua' id='kontrolatua'><br>
+                </div>
+                
+                <div class = 'line'>
+                    <label for="textua">Textua</label>
+                    <div class='textuak'></div>
+                </div>
+                
+                <div class = 'line'>
+                    <button onclick="let txt =document.createElement('input');txt.type = 'text';document.querySelector('.formPerson').querySelector('.textuak').appendChild(txt)
+                    let br = document.createElement('br');document.querySelector('.formPerson').querySelector('.textuak').appendChild(br)">Gehitu textua</button>
+                    <button onclick="document.querySelector('.formPerson').querySelector('.textuak').removeChild(document.querySelector('.formPerson').querySelector('.textuak').querySelector('input'));
+                    document.querySelector('.formPerson').querySelector('.textuak').removeChild(document.querySelector('.formPerson').querySelector('.textuak').querySelector('br'))">Kendu textua</button><br>
+                </div>
+                <div class = 'line'>
+                    <label for="loop">Loop</label>
+                    <div class='loop'></div>
+                </div>
+                
+                <div class = 'line'>
+                    <button class = 'addbutton'>Gehitu ekintza</button>
+                    <button onclick="document.querySelector('.formPerson').querySelector('.loop').removeChild(document.querySelector('.loop').querySelector('div'))">Kendu ekintza</button><br>
+                </div>
+                <button class='remove'>borratu</button>
+            </div>
+            <div class='formMap'>
+                <div class = 'line'>
+                    <h3>Nondik: </h3>
+                </div>
+                <div class = 'line'>
+                    <label for= 'mapanondik'>Mapa: </label>
+                    <select id="mapanondik" name="mapanondik">
+                    </select>
+                </div>
+                <div class = 'line'>
+                    <label for= 'x'>X: </label>
+                    <input type= 'number' name='xnondik' id='xnondik' class="number"></input><br>
+                </div>
+                
+                <div class = 'line'>
+                    <label for= 'y'>Y: </label>
+                    <input type= 'number' name='ynondik' id='ynondik' width="30px" class="number"></input><br>
+                </div>
+                <div class = 'line'>
+                    <h3>Nora: </h3>
+                </div>
+                <div class = 'line'>
+                    <label for= 'mapanora'>Mapa: </label>
+                    <select id="mapanora" name="mapanora">
+                    </select>
+                </div>
+                <div class = 'line'>
+                    <label for= 'x'>X: </label>
+                    <input type= 'number' name='xnora' id='xnora' class="number"></input><br>
+                </div>
+                
+                <div class = 'line'>
+                    <label for= 'y'>Y: </label>
+                    <input type= 'number' name='ynora' id='ynora' width="30px" class="number"></input><br>
+                </div>
+                <div class = 'line'>
+                    <label for="bi-direkzioak">Bi direkzioak</label>
+                    <input type="checkbox" name='bi-direkzioak' id='bi-direkzioak'><br>
+                </div>
+                <button class='remove'>borratu</button>
+
+            </div>
+        </div>
+            
+    </div>
+
+    <script src='./formPerson.js'></script>
+    <script src='./formMapa.js'></script> 
+    <script src="./script.js"></script>
+</body>
+</html>

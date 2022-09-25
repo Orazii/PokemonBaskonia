@@ -1,0 +1,10 @@
+{
+    "mapa": "Etxea",
+    "protagonista": {
+        "izena": "izaro",
+        "skin": "protagonista-mutila",
+        "dir": "gora",
+        "x": 4, 
+        "y": 5
+    }
+}

@@ -1,0 +1,201 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: arial;
+}
+
+header{
+    background-color: rgb(50, 50, 70);
+    color: white;
+    padding: 10px;
+    font-size: 30px;
+    height: 55px
+}
+body{
+    background-color:rgb(50, 50, 70);
+}
+
+header button{
+    font-size: 20px;
+    color: rgb(50, 50, 70);
+    border-radius: 5px;
+    background-color: yellow;
+    font-weight: bold;
+    right: 10px;
+    height: 35px;
+    width: 90px;
+    border: none;
+    cursor: pointer;
+}
+header button:hover{
+    background-color: rgb(216, 216, 0);
+}
+
+.wrapper{
+    display: grid;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+}
+
+/* estruktura */
+.mapak{
+    background-color: rgb(230, 230, 250);
+    grid-column: 1/2;
+    grid-row: 1/50; 
+    padding-top: 20px;
+}
+
+.options{
+    background-color: white;
+    grid-column: 2/14;
+    grid-row: 1/2;
+    padding: 20px;
+    border-top-right-radius: 51px;
+}
+.map{
+    background-color: white;
+    grid-column: 2/14;
+    grid-row: 2/50;
+    padding: 30px;
+    padding-top: 0;
+    overflow: scroll;
+    position: relative;
+}
+.form {
+    background-color: rgb(50, 50, 70);
+    grid-row: 1/50;
+    grid-column: 14/15;
+    color: rgb(230, 230, 250);
+    padding: 10px;
+    margin-top: 30px;
+}
+
+.formPerson {
+    display: none;
+}
+
+.formMap {
+    display: none;
+}
+
+.submit {
+    font-size: 20px;
+    color: rgb(50, 50, 70);
+    border-radius: 5px;
+    background-color: yellow;
+    font-weight: bold;
+    height: 35px;
+    width: 90px;
+    border: none;
+    cursor: pointer;
+}
+.line button{
+    background-color: rgb(230, 230, 250);
+    color: rgb(50, 50, 70);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+input {
+    background-color: rgb(50, 50, 70);
+    border: none;
+    border-bottom: 1px solid white;
+    color: rgb(230, 230, 250);
+}
+input:focus{
+    outline: none;
+}
+input.number{
+    width: 30px;
+}
+select{
+    background-color: rgb(50, 50, 70);
+    border: none;
+    border-bottom: 1px solid rgb(230, 230, 250);
+    color: rgb(230, 230, 250);
+}
+select:focus{
+    outline:none;
+}
+label{
+    font-weight: bold;
+}
+
+.line{
+    padding: 10px;
+}
+.remove{
+    border: none;
+    border-radius: 5px;
+    background-color:rgb(255, 255, 117);
+    padding: 8px;
+    margin: 5px;
+    margin-left: 10px;
+}
+/* taula */
+.grid{
+    position: absolute;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+td{
+    height: 15px;
+    width: 15px;
+    border: 1px solid;
+    position: relative;
+    cursor: pointer;
+}
+td img{
+    position: absolute;
+    top: -10px;
+    clip: rect(0px, 16px, 24px, 0px );
+}
+
+.pareta{
+    background-color: white;
+    opacity: 0.5;
+}
+
+.mapchange{
+    background-color:rgb(216, 216, 0);
+    opacity: 0.5;
+}
+
+/* botoiak */
+.mapalista{
+    border: none;
+    background-color: transparent;
+    display: block;
+    padding: 10px;
+    padding-left: 20px;
+    font-size: 15px;
+    font-weight: light;
+    cursor: pointer;
+    color:rgb(50, 50, 70);
+}
+
+.mapalista:hover{
+    color: grey;
+}
+
+.mapalista.selected{
+    font-weight: bold;
+}
+
+.aukerak{
+    display: inline-block;
+    padding: 15px;
+    border: 3px solid white;
+    color: rgb(50, 50, 70)
+}
+
+.aukerak:hover{
+    border: 3px solid rgb(50, 50, 70);
+    border-radius: 10px;
+}
+.aukerak.selected{
+    border: 3px solid rgb(50, 50, 70);
+    border-radius: 10px;
+}
