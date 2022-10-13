@@ -3,15 +3,8 @@
     const overworld = new Overworld({
         pantaia: document.querySelector('.jolas-edukiontzia').querySelector('#jolasa')
     })
-    const skins = {
-        "protagonista-mutila": './images/people/protagonista-mutila.png',
-        "protagonista-gorria": './images/people/protagonista-gorria.png',
-        "protagonista-neska": './images/people/protagonista-neska.png',
-        "n": './images/people/n.png',
-        "ama": './images/people/ama.png'
-    }
     async function loadMaps(){
-        const response = await fetch("http://localhost:3000/mapak.json", {
+        const response = await fetch("http://localhost:3000/Game/mapak.json", {
             method: 'GET',
         })
         let jsonfile = await response.json()
@@ -23,14 +16,16 @@
                 srcUP: maps[key].srcUP,
                 okupatuta: maps[key].okupatuta,
                 objektuak: [],
-                mapchanges: maps[key].mapchanges
+                mapchanges: maps[key].mapchanges,
+                nun: maps[key].nun,
+                izena: key,
             })
             if(maps[key].cutscenes){
                 Window.mapak[key].cutscenes = maps[key].cutscenes;
             }
             Object.keys(maps[key].objektuak).forEach(objektua => {
                 Window.mapak[key].objektuak[objektua] = new Pertsona({
-                    src: skins[maps[key].objektuak[objektua].skin],
+                    src: maps[key].objektuak[objektua].skin,
                     x: maps[key].objektuak[objektua].x,
                     y: maps[key].objektuak[objektua].y,
                     kontrolatua: maps[key].objektuak[objektua].kontrolatua,
@@ -50,19 +45,31 @@
 
         Object.keys(Window.mapak).forEach(map => {
             Window.mapak[map].objektuak.protagonista = new Pertsona({
-                src: skins[jsonfile.protagonista.skin],
+                src: jsonfile.protagonista.skin,
                 kontrolatua: true,
                 izena: jsonfile.protagonista.izena 
             })
         })
         Window.mapa.objektuak.protagonista = new Pertsona({
-            src: skins[jsonfile.protagonista.skin],
+            src: jsonfile.protagonista.skin,
             x: jsonfile.protagonista.x,
             y: jsonfile.protagonista.y,
-            direkzioa: jsonfile.protagonista.direkzioa,
+            direkzioa: jsonfile.protagonista.dir,
             kontrolatua: true,
             izena: jsonfile.protagonista.izena 
         })
+        Window.saved = {
+            dominak: jsonfile.dominak,
+            denbora: jsonfile.denbora
+        }
+        Window.marraztu = []
+        let denborakontadorea =()=>{
+            Window.saved.denbora += 1;
+            setTimeout(()=>{
+                denborakontadorea()
+            }, 1000)
+        }
+        denborakontadorea()
         overworld.init()
     }
     loadMaps().then(loadSaved())   

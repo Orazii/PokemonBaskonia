@@ -1,10 +1,16 @@
-const mapak = document.querySelector('.mapak')
+const mapak = document.querySelector('.mapakbarrua')
 const map = document.querySelector('.map')
 const grid = map.querySelector('table')
 const gorde = document.querySelector('.gorde')
 const options = document.querySelector('.options').querySelector('ul')
 const optionslist = document.querySelector('.options').querySelector('ul').getElementsByTagName('li')
+const paretaslide = document.querySelector('.paretaslide')
 
+paretaslide.oninput=()=>{
+    document.querySelectorAll('.pareta').forEach((pareta)=>{
+        pareta.style.opacity = paretaslide.value/100
+    })
+}
 //botoiak aukeratzerakoan aldatzeko estiloa
 const select=(selected, group)=>{
     if(group.querySelector('.selected')){
@@ -21,14 +27,22 @@ for(let i = 0; i < optionslist.length; i++){
         if (mode == 'pertsonak') {
             document.querySelector('.formPerson').style.display = 'block'
             document.querySelector('.formMap').style.display = 'none'
+            document.querySelector('.formNewMap').style.display = 'none'
         } else if (mode == 'mapa-aldaketa'){
             document.querySelector('.formMap').style.display = 'block'
             document.querySelector('.formPerson').style.display = 'none'
+            document.querySelector('.formNewMap').style.display = 'none'
         } else {
             document.querySelector('.formPerson').style.display = 'none'
-            document.querySelector('.formMap').style.displayisplay = 'none'
+            document.querySelector('.formMap').style.display= 'none'
+            document.querySelector('.formNewMap').style.display = 'none'
         }
     });
+}
+let showmapform=()=>{
+    document.querySelector('.formPerson').style.display = 'none'
+    document.querySelector('.formMap').style.display= 'none'
+    document.querySelector('.formNewMap').style.display = 'block'
 }
 
 let mode;
@@ -36,28 +50,53 @@ let maps;
 let mapa;
 
 //skin ezberdinak kargatu
-const skins = {
-    "protagonista-mutila": './images/people/protagonista-mutila.png',
-    "protagonista-gorria": './images/people/protagonista-gorria.png',
-    "protagonista-neska": './images/people/protagonista-neska.png',
-    "n": './images/people/n.png',
-    "ama": './images/people/ama.png'
+let skins = {}
+async function getSkins(){
+    const response = await fetch("http://localhost:3000/images/people", {
+        method: 'GET',
+    })
+    let files = await response.json()
+    files.files.forEach((file)=>{
+        skins[file.match('(.*)(?=.png)')[0]] = './images/people/' + file
+    })
 }
-
-Object.keys(skins).forEach(skin=>{
-    var option = document.createElement('option') 
-    option.innerHTML = skin;
-    option.value = skin;
-    document.querySelector('#skin').appendChild(option)
+const loadMapSkins=()=>{
+    document.querySelector('#skin').innerHTML = '';
+    Object.keys(skins).forEach(skin=>{
+        var option = document.createElement('option') 
+        option.innerHTML = skin;
+        option.value = skin;
+        document.querySelector('#skin').appendChild(option)
+    })
+}
+getSkins().then(loadMapSkins())
+let mapskins = {}
+async function getMapSkins(){
+    const response = await fetch("http://localhost:3000/images/maps", {
+        method: 'GET',
+    })
+    let files = await response.json()
+    files.files.forEach((file)=>{
+        if(file.match('DOWN.png')){
+            mapskins[file.match('(.*)(?=(DOWN)|(UP).png)')[0]] = './images/maps/' + file
+        }
+    })
+}
+getMapSkins().then(()=>{
+    Object.keys(mapskins).forEach(skin=>{
+        var option = document.createElement('option') 
+        option.innerHTML = skin;
+        option.value = skin;
+        document.querySelector('#mapskin').appendChild(option)
+    })
 })
 
 async function getMaps(){
-    const response = await fetch("http://localhost:3000/mapak.json", {
+    const response = await fetch("http://localhost:3000/Game/mapak.json", {
         method: 'GET',
     })
     let jsonfile = await response.json()
     maps = jsonfile.mapak
-    console.log(maps)
     Object.keys(maps).forEach(map=>{
         var option = document.createElement('option')
         option.innerHTML = map;
@@ -71,8 +110,8 @@ async function getMaps(){
 }
 
 function loadMaps(){
-    //mapak lortu json fitxategitik    
-    mapak.innerHTML= ''
+    //borratu
+    mapak.innerHTML = ""
     //mapa bakoitzarekin egin ____
     Object.keys(maps).forEach((key)=>{
         //botoi bat sortu
@@ -80,9 +119,27 @@ function loadMaps(){
         button.id = key
         button.innerHTML = key
         button.className = 'mapalista'
-        mapak.appendChild(button)
+        button.classList.add('nun')
+        if(document.querySelector(`.${maps[key].nun}`) == undefined){
+            var div = document.createElement('div')
+            div.className = maps[key].nun
+            mapak.appendChild(div)
+        }
+        var div = document.querySelector(`.${maps[key].nun}`)
+        if (maps[key].nun == key){
+            button.classList.add('out')
+            var option = document.createElement('option') 
+            option.innerHTML = key;
+            option.value = key;
+            document.querySelector('#nun').appendChild(option)
+        } else {
+            button.classList.add('in')
+        }
+        div.appendChild(button)
         //botoiari eventoa jarri: klikatzerakoan mapa jarri pantaian
         mapak.querySelector(`#${key}`).addEventListener('click', ()=>{
+            borratu.style.display = 'block'
+            gehitu.style.display = 'none'
             //aukeratutako mapa aukeratu
             mapa = key
             //estiloa aldatu botoiari
@@ -96,6 +153,12 @@ function loadMaps(){
                 map.removeChild(map.querySelector('.mapa'))
             }
             map.appendChild(image)
+            //formularioa bete datuekin
+            showmapform()
+            document.querySelector('#mapaizena').value = key
+            document.querySelector('#nun').value = maps[key].nun
+            let src = maps[key].srcDOWN
+            document.querySelector('#mapskin').value = src.match('(?<=maps\/).*(?=(DOWN)|(UP).png)')[0]
             //taula gehitu            
             grid.innerHTML = ''
             image.onload =()=>{
@@ -107,21 +170,31 @@ function loadMaps(){
                     grid.appendChild(row);
                     for(let n = 0; n < x; n ++){
                         let td = document.createElement('td');
+                        td.setAttribute('draggable', false);
                         td.id = `[${n},${i}]`
+                        td.aldatuta = false;
                         //mapan pareta badago belztu kasilla
                         if(maps[key].okupatuta.includes(td.id)){
-                            td.className = 'pareta'
+                            div = document.createElement('div')
+                            div.className = 'pareta'
+                            td.appendChild(div)
                         }
                         //kasilla klikatzerakoan
                         let clicktd=(mapaaldaketak)=>{
                             if(mode == 'paretak' ){
-                                if(maps[key].okupatuta.includes(td.id)){
-                                    td.className = '';
-                                    index = maps[key].okupatuta.findIndex(x=>{return x == td.id})
-                                    maps[key].okupatuta.splice(index, 1)
-                                } else {
-                                    td.className = 'pareta'
-                                    maps[key].okupatuta.push(td.id)
+                                if(!td.aldatuta){
+                                    if(!maps[key].okupatuta.includes(td.id)){
+                                        console.log('adding square')
+                                        div = document.createElement('div')
+                                        div.className = 'pareta'
+                                        td.appendChild(div)
+                                        maps[key].okupatuta.push(td.id)  
+                                    }else{
+                                        td.querySelector('.pareta').remove()
+                                        index = maps[key].okupatuta.findIndex(x=>{return x == td.id})
+                                        maps[key].okupatuta.splice(index, 1)
+                                    }
+                                    td.aldatuta = true;
                                 }
                             } else if (mode == 'pertsonak'){
                                 Object.keys(maps[key].objektuak).forEach(pertsona =>{
@@ -153,7 +226,6 @@ function loadMaps(){
                                 let yto = document.querySelector('#ynora')
                                 let mapto = document.querySelector('#mapanora')
                                 let mapfrom = document.querySelector('#mapanondik')
-                                console.log(key, mapto.value)
                                 if(key == mapto.value){
                                     xto.value = n
                                     yto.value = i
@@ -177,14 +249,21 @@ function loadMaps(){
                                 })
                             }
                         }
-                        td.addEventListener('mouseover',(e)=>{
+                        const tdmouseover =(e)=>{
                             if(e.buttons == 1 || e.buttons == 3){
+                                console.log('mouseover')
                                 clicktd(false)
                             }
-                        })
-                        td.addEventListener('mousedown',()=>{
-                            clear()
+                        }
+                        
+                        td.addEventListener('mouseover',tdmouseover)
+                        const tdlistener =()=>{
+                            console.log('tdclicked')
                             clicktd(true)
+                        }
+                        td.addEventListener('click', tdlistener)
+                        td.addEventListener('mouseleave', ()=>{
+                            td.aldatuta = false
                         })
 
                         row.appendChild(td);
@@ -198,6 +277,7 @@ function loadMaps(){
 
 getMaps().then(loadMaps)
 async function post(){
+    console.log(maps)
     const rawResponse = await fetch('http://localhost:3000/update', {
           method: 'POST',
           headers: {

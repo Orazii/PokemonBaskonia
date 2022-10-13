@@ -1,10 +1,12 @@
 {
-    "mapa": "Etxea",
-    "protagonista": {
-        "izena": "izaro",
-        "skin": "protagonista-mutila",
-        "dir": "gora",
-        "x": 4, 
-        "y": 5
-    }
+  "mapa": "mapa",
+  "protagonista": {
+    "izena": "admin",
+    "skin": "protagonista-mutila",
+    "dir": "eskubi",
+    "x": 44,
+    "y": 34
+  },
+  "dominak": [],
+  "denbora": 537
 }

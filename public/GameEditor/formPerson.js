@@ -112,16 +112,18 @@ const update =()=>{
         //borratu pertsona guztiak
         tdak = document.getElementsByTagName('td')
         for(let i = 0; i < tdak.length; i++){
-            tdak[i].innerHTML = ''
+            try{
+                tdak[i].querySelector('img').remove();
+            }catch{}
         }
         objektuak = maps[mapa].objektuak;
         //mapan pertsona badago gehitu pertsona
         Object.values(objektuak).forEach(pertsona =>{
             td = document.getElementById(`[${pertsona.x},${pertsona.y}]`)
             var pertsonaimg = document.createElement('img')
-                pertsonaimg.src = `../${skins[pertsona.skin]}`
-                pertsonaimg.setAttribute('draggable', 'false');
-                td.appendChild(pertsonaimg)
+            pertsonaimg.src = `../${skins[pertsona.skin]}`
+            pertsonaimg.setAttribute('draggable', 'false');
+            td.appendChild(pertsonaimg)
         })
     } catch (error) {
     }

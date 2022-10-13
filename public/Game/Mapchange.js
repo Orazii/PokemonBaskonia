@@ -5,6 +5,7 @@ class Mapchange {
     }
     changemap(mapchange){
         this.transitioning = true;
+        Window.mapa.cutscene = true;
         this.div.style.animationName = 'opacitytoone';
         var direkzioa = Window.mapa.objektuak.protagonista.direkzioa
         var x = mapchange.protagonista[0];
@@ -32,6 +33,7 @@ class Mapchange {
         setTimeout(()=>{
             Window.mapa.objektuak.protagonista.kontrolatua = true;
             this.transitioning = false;
+            Window.mapa.cutscene = false;
         },1000)
     }
 }

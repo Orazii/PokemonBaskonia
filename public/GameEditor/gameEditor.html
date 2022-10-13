@@ -13,7 +13,12 @@
         <button class="gorde">gorde</button>
     </header>
     <div class = 'wrapper'>
-        <div class = 'mapak'></div>
+        <div class = 'mapak'>
+            <div style='text-align: center'>
+                <button class="gehi">+</button>
+            </div>
+            <div class='mapakbarrua'></div>
+        </div>
         <div class = 'options'>
             <ul>
                 <li id='paretak' class='aukerak'>Hormak</li>
@@ -21,12 +26,15 @@
                 <li id='mapa-aldaketa' class = 'aukerak'>Mapa aldaketak</li>
             </ul>
         </div>
+        <div class = 'watch'><div class = 'watchinside'>
+            Hormak: <input type="range" min="0" max="100" value="100" class="paretaslide"></input>
+        </div></div>
         <div class = 'map' draggable = 'false'>
             <table class = 'grid' draggable = 'false'>
             </table>
         </div>
         <div class= 'form'>
-            <div class='formPerson'>
+            <div class='formPerson insideform'>
                 <div class = 'line'>
                     <label for= 'izena'>Izena: </label>
                     <input type= 'text' name='izena' id='izena'></input><br>
@@ -75,7 +83,7 @@
                 </div>
                 <button class='remove'>borratu</button>
             </div>
-            <div class='formMap'>
+            <div class='formMap insideform'>
                 <div class = 'line'>
                     <h3>Nondik: </h3>
                 </div>
@@ -117,12 +125,31 @@
                 <button class='remove'>borratu</button>
 
             </div>
+            <div class="formNewMap insideform">
+                <div class = 'line'>
+                    <label for= 'izena'>Izena: </label>
+                    <input type= 'text' name='mapaizena' id='mapaizena'></input><br>
+                </div>
+                <div class = 'line'>
+                    <label for= 'nun'>Nun: </label>
+                    <select type= 'text' name='nun' id='nun'>
+                    </select><br>
+                </div>
+                <div class = 'line'>
+                    <label for= 'mapskin'>Skin: </label>
+                    <select id="mapskin" name="mapskin">
+                    </select><br>
+                </div>
+                <button class='remove'>borratu</button>
+                <button class='add'>gehitu</button>
+            </div>
         </div>
             
     </div>
 
     <script src='./formPerson.js'></script>
     <script src='./formMapa.js'></script> 
+    <script src="./formNewMapa.js"></script>
     <script src="./script.js"></script>
 </body>
 </html>

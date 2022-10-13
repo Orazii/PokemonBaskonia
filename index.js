@@ -7,7 +7,7 @@ const sessions = require('express-session')
 const cookieParser = require('cookie-parser')
 const oneDay = 1000*60*60*24
 let erabiltzailea;
-let session;
+let session = {};
 
 app.use(sessions({
     secret: 'n3iu4th398hfdksjh84',
@@ -38,11 +38,15 @@ app.listen(port, ()=>{
     console.log(`App running on port ${port}`)
 })
 app.get('/game', (req, res)=>{
-    if(session === undefined ){
-        res.redirect('/')
-    } else {
-        res.sendFile(__dirname + '/public/game.html')
-    }
+    console.log(session.userid)
+    // if(session.userid === undefined ){
+    //     console.log('redirecting')
+    //     res.redirect('/')
+    // } else {
+    //     res.sendFile(__dirname + '/public/Game/game.html')
+    // }
+    session.userid = 'admin';
+    res.sendFile(__dirname + '/public/Game/game.html')
 })
 
 app.post('/login', (req, res)=>{
@@ -54,7 +58,6 @@ app.post('/login', (req, res)=>{
         if (data == req.body.pasahitza){
             session = req.session;
             session.userid = req.body.erabiltzailea
-            console.log(session)
             res.redirect(301, '/game')
         } else {
             res.status(401).send({ error: "Wrong username or password" })
@@ -62,9 +65,53 @@ app.post('/login', (req, res)=>{
     })
 })
 
+app.post('/signup', (req, res)=>{
+    if (req.body.pasahitza == ''){
+        res.status(401).send({error: '*Pasahitza jarri'})
+        return
+    }else if (req.body.erabiltzailea == ''){
+        res.status(401).send({error: '*Erabiltzaile izena jarri'})
+        return
+    }else if (fs.existsSync(`${__dirname}/erabiltzaileak/${req.body.erabiltzailea}`)){
+        res.status(401).send({ error: '*Erabiltzailea ez dago erabilgarri'})
+        return
+    }
+    fs.mkdirSync(`${__dirname}/erabiltzaileak/${req.body.erabiltzailea}`)
+    fs.writeFile(`${__dirname}/erabiltzaileak/${req.body.erabiltzailea}/pasahitza.txt`, req.body.pasahitza,(err)=>{
+        if(err){console.log(err)}
+    })
+    fs.writeFile(`${__dirname}/erabiltzaileak/${req.body.erabiltzailea}/jolasa.json`, `
+    {
+        "mapa": "Etxea",
+        "protagonista": {
+            "izena": "izaro",
+            "skin": "protagonista-mutila",
+            "dir": "gora",
+            "x": 4, 
+            "y": 5
+        },
+        "dominak": [],
+        "denbora": 0
+    }
+    `, (err)=>{if(err){console.log(err)}})
+    session = req.session;
+    session.userid = req.body.erabiltzailea
+    res.redirect(301, '/game')
+
+})
+
 app.get('/saved', (req, res)=>{
     if(session){
         res.sendFile(`${__dirname}/erabiltzaileak/${session.userid}/jolasa.json`)
+    }
+})
+app.post('/saved', (req,res)=>{
+    if(session){
+        let saved = JSON.stringify(req.body, null, 2)
+        fs.writeFile(`${__dirname}/erabiltzaileak/${session.userid}/jolasa.json`, saved, (err)=>{
+            console.log(err)
+            res.send('saved')
+        })
     }
 })
 
@@ -76,5 +123,22 @@ app.get('/logout', (req, res)=>{
 
 app.post('/update', (req, res)=>{
     let mapak = JSON.stringify({"mapak":req.body}, null, 2)
-    fs.writeFileSync(__dirname+'/public/mapak.json', mapak)
+    fs.writeFileSync(__dirname+'/public/Game/mapak.json', mapak)
+})
+
+app.get('/images/people', (req, res)=>{
+    fs.readdir(__dirname+'/public/images/people', (err, files)=>{
+        if(err){
+            console.log(err)
+        }
+        res.send({files})
+    })
+})
+app.get('/images/maps', (req, res)=>{
+    fs.readdir(__dirname+'/public/images/maps', (err, files)=>{
+        if(err){
+            console.log(err)
+        }
+        res.send({files})
+    })
 })

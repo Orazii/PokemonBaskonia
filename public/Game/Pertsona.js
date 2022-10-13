@@ -12,6 +12,8 @@ class Pertsona extends Objektua {
         this.loop = config.loop || []
         this.loopindex = 0
         this.textua = config.textua || []
+        this.image.src = `./images/people/${this.src}.png`
+        this.bira = false
     }
 
     marraztu(ctx, pertsona){
@@ -43,17 +45,28 @@ class Pertsona extends Objektua {
 
     mugitu(dir){
         if (this.kontrolatua && !Window.mapa.cutscene){
-            if(!this.mugimenduaFaltan > 0){
+            if(!this.mugimenduaFaltan > 0 && !this.stop){
                 if (dir){
-                    this.ibili(dir)
+                    this.ibili(dir)                  
                 } else {
                     this.mugitzen = false
                 } 
             }
         } 
     }
+    direkzioa(dir){
+        if (this.kontrolatua && !Window.mapa.cutscene){
+            this.direkzioa = dir
+        }
+    }
 
     ibili(dir){
+        if(this.kontrolatua && this.direkzioa != dir && Window.directionInput.zapaldutakoDirekzioak.length == 1 && this.mugitzen == false){
+            this.bira = true
+            this.mugimenduaFaltan = 8
+            this.direkzioa = dir
+            return 
+        }
         this.mugitzen = true
         this.direkzioa = dir
         if (dir == 'gora'){
@@ -115,7 +128,8 @@ class Pertsona extends Objektua {
             }
         }
         if(this.mugimenduaFaltan > 0){
-            if (this.direkzioa == 'eskubi'){
+            if (this.bira){
+            } else if (this.direkzioa == 'eskubi'){
                 this.xx ++
             } else if (this.direkzioa == 'ezkerra'){
                 this.xx --
@@ -126,6 +140,7 @@ class Pertsona extends Objektua {
             }
             this.mugimenduaFaltan --
             if (this.mugimenduaFaltan == 0){
+                this.bira = false
                 const ibiltzenbukatuta = new CustomEvent('bukatuta', {detail: this})
                 document.dispatchEvent(ibiltzenbukatuta)
             }

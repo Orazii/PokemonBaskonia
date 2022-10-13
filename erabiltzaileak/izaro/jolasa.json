@@ -1,0 +1,12 @@
+{
+  "mapa": "Etxea",
+  "protagonista": {
+    "izena": "izaro",
+    "skin": "protagonista-mutila",
+    "dir": "bera",
+    "x": "3",
+    "y": 6
+  },
+  "dominak": [],
+  "denbora": 86
+}

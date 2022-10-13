@@ -52,13 +52,17 @@ const updateMapa =()=>{
         //borratu kasilla guztiak
         tdak = document.getElementsByTagName('td')
         for(let i = 0; i < tdak.length; i++){
-            tdak[i].classList.remove('mapchange')
+            try{
+                tdak[i].querySelector('.mapchange').remove()
+            }catch{}
         }
         //mapa aldaketa badago kasilla horitu
         Object.keys(maps[mapa].mapchanges).forEach(mapchange=>{
             try{
                 td = document.getElementById(mapchange)
-                td.className = 'mapchange'
+                div = document.createElement('div')
+                div.className= 'mapchange'
+                td.appendChild(div)
             } catch {
 
             }
