@@ -6,6 +6,20 @@ class Overworld {
 
     startGameLoop(){
         let pausoa =()=>{
+
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+            let scale;
+
+            if (w/h > 352/240){
+                scale = h/240 * 0.8;
+            } else {
+                scale = w/352 * 0.8;
+            }
+
+            let jolasedukiontzia = document.querySelector(".jolas-edukiontzia");
+            jolasedukiontzia.style.transform = `scale(${scale})`;
+
             this.ctx.clearRect(0, 0, this.pantaia.width, this.pantaia.height)
             let objects = Object.values(Window.mapa.objektuak)
             objects.sort(function(a,b){return a.y-b.y})

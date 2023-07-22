@@ -9,14 +9,17 @@
 </head>
 <body>
     <a href="http://localhost:3000/logout">atera</a>
-    <div class = 'jolas-edukiontzia'>
-        <canvas id = 'jolasa' class='pantaia' width = '352' height = '198'>
-        </canvas>
-        <div class = 'textua-wrap'>
-            <canvas id ='textua' class='pantaia' width = '352' height = '36'></canvas>
+    <div class="container">
+        <div class = 'jolas-edukiontzia'>
+            <canvas id = 'jolasa' class='pantaia' width = '352' height = '240'>
+            </canvas>
+            <div class = 'textua-wrap'>
+                <canvas id ='textua' class='pantaia' width = '352' height = '36'></canvas>
+            </div>
+            <div class="mapchange" width = '352px' height = '198px'></div> 
         </div>
-        <div class="mapchange" width = '352px' height = '198px'></div> 
     </div>
+    
     <script src="./Game/utils.js"></script>
     <script src="./Game/KeyInput.js"></script>
     <script src="./Game/Textua.js"></script>
