@@ -2,7 +2,8 @@ class KeyInput {
     constructor(){
         this.funtzioa = (e)=>{
             if(!window.mapa.cutscene){
-                if(e.key == 's'){
+                console.log(e.key)
+                if(e.key == 'z'){
                     if(window.menu.opened){
                         window.menu.pick()
                     } else {
@@ -42,12 +43,16 @@ class KeyInput {
                         })
                     }
     
-                } else if (e.key == 'x'){
+                } else if (e.key == 'Enter'){
                     if(window.menu.opened){
                         window.menu.close();
                         
                     } else {
                         window.menu.open();
+                    }
+                } else if (e.key == 'x'){
+                    if (window.menu.opened){
+                        window.menu.exit();
                     }
                 }
             }

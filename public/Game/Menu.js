@@ -64,6 +64,7 @@ class Menu {
     pick(){
         this.close()
         let aukera = this.content[this.selected];
+        console.log(this.content[this.selected])
         if(this == window.menu){
             if (aukera == 'GORDE'){
                 window.save = new Save({});
@@ -71,5 +72,12 @@ class Menu {
             }
         }  
         return aukera      
+    }
+    exit(){
+        let aukera = this.content.find(element=>element == "EZ" || element == "ATERA"); 
+        if (aukera){
+            this.close()
+            return aukera
+        }
     }
 }

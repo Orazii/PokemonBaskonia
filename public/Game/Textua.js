@@ -29,13 +29,13 @@ class Textua {
         }, {once: true})
 
         let keyup =(e)=>{
-            if(e.key == 's'){
+            if(e.key == 'z'){
                 this.speed = 40
                 document.addEventListener('keydown', funtzioa)
             }
         }
         let funtzioa = (e)=>{
-            if (e.key == 's') {
+            if (e.key == 'z') {
                 document.removeEventListener('keydown', funtzioa)
                 if (this.done){
                     sentence += 1

@@ -3,10 +3,10 @@
   "protagonista": {
     "izena": "admin",
     "skin": "protagonista-mutila",
-    "dir": "eskubi",
-    "x": 44,
-    "y": 34
+    "dir": "bera",
+    "x": 31,
+    "y": 55
   },
   "dominak": [],
-  "denbora": 537
+  "denbora": 645
 }

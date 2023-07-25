@@ -49,6 +49,7 @@ class Save{
         }, 10)           
     }
     init(){
+        console.log('saving')
         window.marraztu.push(this);
         window.textua.write(['Jolasa gorde nahi al duzu?'],['BAI', 'EZ']);
         let erantzuna=e=>{
