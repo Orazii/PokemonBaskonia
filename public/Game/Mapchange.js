@@ -5,9 +5,9 @@ class Mapchange {
     }
     changemap(mapchange){
         this.transitioning = true;
-        Window.mapa.cutscene = true;
+        window.mapa.cutscene = true;
         this.div.style.animationName = 'opacitytoone';
-        var direkzioa = Window.mapa.objektuak.protagonista.direkzioa
+        var direkzioa = window.mapa.objektuak.protagonista.direkzioa
         var x = mapchange.protagonista[0];
         var y = mapchange.protagonista[1];
         if(direkzioa == 'gora'){
@@ -19,23 +19,23 @@ class Mapchange {
         } else if (direkzioa == 'eskubi'){
             x++
         }
-        Window.mapak[mapchange.nora].objektuak.protagonista.x = x 
-        Window.mapak[mapchange.nora].objektuak.protagonista.y = y
-        Window.mapak[mapchange.nora].objektuak.protagonista.xx = grid(x) 
-        Window.mapak[mapchange.nora].objektuak.protagonista.yy = grid(y)
-        Window.mapak[mapchange.nora].objektuak.protagonista.mugimenduaFaltan = 0
-        Window.mapak[mapchange.nora].objektuak.protagonista.direkzioa = direkzioa
+        window.mapak[mapchange.nora].objektuak.protagonista.x = x 
+        window.mapak[mapchange.nora].objektuak.protagonista.y = y
+        window.mapak[mapchange.nora].objektuak.protagonista.xx = grid(x) 
+        window.mapak[mapchange.nora].objektuak.protagonista.yy = grid(y)
+        window.mapak[mapchange.nora].objektuak.protagonista.mugimenduaFaltan = 0
+        window.mapak[mapchange.nora].objektuak.protagonista.direkzioa = direkzioa
         setTimeout(()=>{
-            Window.mapa = Window.mapak[mapchange.nora];
+            window.mapa = window.mapak[mapchange.nora];
             this.div.style.animationName = 'opacitytozero';
-            Window.mapa.objektuak.protagonista.kontrolatua = false;
+            window.mapa.objektuak.protagonista.kontrolatua = false;
         }, 500)
         setTimeout(()=>{
-            Window.mapa.objektuak.protagonista.kontrolatua = true;
+            window.mapa.objektuak.protagonista.kontrolatua = true;
             this.transitioning = false;
-            Window.mapa.cutscene = false;
+            window.mapa.cutscene = false;
         },1000)
     }
 }
 
-Window.mapchange = new Mapchange()
+window.mapchange = new Mapchange()

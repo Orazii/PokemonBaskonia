@@ -1,9 +1,9 @@
 class Save{
     constructor(config){
         console.log('creating save')
-        this.mapa = Window.mapa;
-        this.dominak = Window.saved.dominak;
-        let segunduak = Window.saved.denbora;
+        this.mapa = window.mapa;
+        this.dominak = window.saved.dominak;
+        let segunduak = window.saved.denbora;
         let minutuak = Math.floor(segunduak /60)
         let orduak = Math.floor(minutuak / 60)
         minutuak = (minutuak - orduak*60).toLocaleString(undefined, {minimumIntegerDigits: 2})
@@ -26,7 +26,7 @@ class Save{
         ctx.textAlign = 'left';
         ctx.fillStyle = "#616161";
         ctx.fillText('IZENA', x+9, y + 20 + space)        
-        ctx.fillText(Window.mapa.objektuak.protagonista.izena, x+7+width/2, y + 20 + space)
+        ctx.fillText(window.mapa.objektuak.protagonista.izena, x+7+width/2, y + 20 + space)
         ctx.fillText('DOMINAK', x+9, y+20+space*2)
         ctx.fillText(this.dominak.length, x+7+width/2, y+20+space*2)
         ctx.fillText('DENBORA', x+9, y+20+space*3)
@@ -43,21 +43,21 @@ class Save{
             });
         document.dispatchEvent(new CustomEvent('deletetext'))
         setTimeout(()=>{
-            Window.textua.write([`Jokua gorde duzu.`], [], ()=>{
+            window.textua.write([`Jokua gorde duzu.`], [], ()=>{
                 marrazturemove(this)
             })
         }, 10)           
     }
     init(){
-        Window.marraztu.push(this);
-        Window.textua.write(['Jolasa gorde nahi al duzu?'],['BAI', 'EZ']);
+        window.marraztu.push(this);
+        window.textua.write(['Jolasa gorde nahi al duzu?'],['BAI', 'EZ']);
         let erantzuna=e=>{
             if(e.detail.erantzuna == 'BAI'){
-                Window.textua.remove()
-                Window.textua.esaldia('Gordetzen... Ez atera jolasetik.')
-                let protagonista = Window.mapa.objektuak.protagonista
+                window.textua.remove()
+                window.textua.esaldia('Gordetzen... Ez atera jolasetik.')
+                let protagonista = window.mapa.objektuak.protagonista
                 let saved = {
-                    mapa: Window.mapa.izena,
+                    mapa: window.mapa.izena,
                     protagonista: {
                         izena: protagonista.izena,
                         skin: protagonista.src,
@@ -65,8 +65,8 @@ class Save{
                         x: protagonista.x,
                         y: protagonista.y
                     },
-                    dominak: Window.saved.dominak,
-                    denbora: Window.saved.denbora
+                    dominak: window.saved.dominak,
+                    denbora: window.saved.denbora
                 }
                 this.post(saved)
             } else if(e.detail.erantzuna=='EZ'){

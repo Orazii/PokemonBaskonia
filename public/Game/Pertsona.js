@@ -14,6 +14,7 @@ class Pertsona extends Objektua {
         this.textua = config.textua || []
         this.image.src = `./images/people/${this.src}.png`
         this.bira = false
+
     }
 
     marraztu(ctx, pertsona){
@@ -30,8 +31,29 @@ class Pertsona extends Objektua {
             this.animazioIndex = 0
             this.animazioa = 0
         }
-        let x = this.xx + grid(10.5) - pertsona.xx;
-        let y = this.yy + grid(6) - pertsona.yy - 10;
+        
+        let centerY = grid(7);
+        let centerX = grid(11);
+
+
+        if(window.mapa.imageDown.height > grid(15)){
+            if (pertsona.yy > window.mapa.imageDown.height - grid(8)){
+                centerY = grid(15)-(window.mapa.imageDown.height - pertsona.yy);
+            } else if (pertsona.yy < grid(7)){
+                centerY = pertsona.yy;
+            }
+        }
+
+        if (window.mapa.imageDown.width > grid(22)){
+            if (pertsona.xx > window.mapa.imageDown.width - grid(11)){
+                centerX = grid(22)-(window.mapa.imageDown.width - pertsona.xx);
+            } else if (pertsona.xx < grid(11)){
+                centerX = pertsona.xx
+            }
+        }
+        
+        let x = this.xx + centerX - pertsona.xx;
+        let y = this.yy + centerY - pertsona.yy - 10;
         if (this.direkzioa == 'eskubi'){
             ctx.drawImage(this.image, this.animazioa * 16, 2*24, 16, 24, x, y, 16, 24)
         } else if (this.direkzioa == 'ezkerra'){
@@ -44,7 +66,7 @@ class Pertsona extends Objektua {
     }
 
     mugitu(dir){
-        if (this.kontrolatua && !Window.mapa.cutscene){
+        if (this.kontrolatua && !window.mapa.cutscene){
             if(!this.mugimenduaFaltan > 0 && !this.stop){
                 if (dir){
                     this.ibili(dir)                  
@@ -55,13 +77,13 @@ class Pertsona extends Objektua {
         } 
     }
     direkzioa(dir){
-        if (this.kontrolatua && !Window.mapa.cutscene){
+        if (this.kontrolatua && !window.mapa.cutscene){
             this.direkzioa = dir
         }
     }
 
     ibili(dir){
-        if(this.kontrolatua && this.direkzioa != dir && Window.directionInput.zapaldutakoDirekzioak.length == 1 && this.mugitzen == false){
+        if(this.kontrolatua && this.direkzioa != dir && window.directionInput.zapaldutakoDirekzioak.length == 1 && this.mugitzen == false){
             this.bira = true
             this.mugimenduaFaltan = 8
             this.direkzioa = dir
@@ -70,9 +92,9 @@ class Pertsona extends Objektua {
         this.mugitzen = true
         this.direkzioa = dir
         if (dir == 'gora'){
-            if(!Window.mapa.okupatuta.includes(`[${this.x},${this.y-1}]`)){
-                if(Window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
-                    Window.mapa.okupatuta.splice(Window.mapa.okupatuta.indexOf(`[${this.x},${this.y}]`),1)
+            if(!window.mapa.okupatuta.includes(`[${this.x},${this.y-1}]`)){
+                if(window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
+                    window.mapa.okupatuta.splice(window.mapa.okupatuta.indexOf(`[${this.x},${this.y}]`),1)
                 }
                 this.y --
                 this.mugimenduaFaltan = 16
@@ -80,9 +102,9 @@ class Pertsona extends Objektua {
                 setTimeout(()=>{this.ibili(dir)}, 1000)
             }
         } else if (dir == 'bera'){
-            if(!Window.mapa.okupatuta.includes(`[${this.x},${this.y+1}]`)){
-                if(Window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
-                    Window.mapa.okupatuta.splice(Window.mapa.okupatuta.indexOf(`[${this.x},${this.y}]`),1)
+            if(!window.mapa.okupatuta.includes(`[${this.x},${this.y+1}]`)){
+                if(window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
+                    window.mapa.okupatuta.splice(window.mapa.okupatuta.indexOf(`[${this.x},${this.y}]`),1)
                 }
                 this.y ++
                 this.mugimenduaFaltan = 16
@@ -90,9 +112,9 @@ class Pertsona extends Objektua {
                 setTimeout(()=>{this.ibili(dir)}, 1000)
             }
         } else if (dir == 'eskubi'){
-            if(!Window.mapa.okupatuta.includes(`[${this.x+1},${this.y}]`)){
-                if(Window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
-                    Window.mapa.okupatuta.splice(Window.mapa.okupatuta.indexOf(`[${this.x},${this.y}]`),1)
+            if(!window.mapa.okupatuta.includes(`[${this.x+1},${this.y}]`)){
+                if(window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
+                    window.mapa.okupatuta.splice(window.mapa.okupatuta.indexOf(`[${this.x},${this.y}]`),1)
                 }
                 this.x ++
                 this.mugimenduaFaltan = 16
@@ -100,9 +122,9 @@ class Pertsona extends Objektua {
                 setTimeout(()=>{this.ibili(dir)}, 1000)
             }
         } else if (dir == 'ezkerra'){
-            if(!Window.mapa.okupatuta.includes(`[${this.x-1},${this.y}]`)){
-                if(Window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
-                    Window.mapa.okupatuta.splice(Window.mapa.okupatuta.indexOf(`[${this.x},${this.y}]`),1)
+            if(!window.mapa.okupatuta.includes(`[${this.x-1},${this.y}]`)){
+                if(window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
+                    window.mapa.okupatuta.splice(window.mapa.okupatuta.indexOf(`[${this.x},${this.y}]`),1)
                 }
                 this.x --
                 this.mugimenduaFaltan = 16
@@ -122,9 +144,9 @@ class Pertsona extends Objektua {
     }
 
     update(){
-        if(!Window.mapchange.transitioning){
-            if(!Window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
-                Window.mapa.okupatuta.push(`[${this.x},${this.y}]`)
+        if(!window.mapchange.transitioning){
+            if(!window.mapa.okupatuta.includes(`[${this.x},${this.y}]`)){
+                window.mapa.okupatuta.push(`[${this.x},${this.y}]`)
             }
         }
         if(this.mugimenduaFaltan > 0){
@@ -153,7 +175,7 @@ class Pertsona extends Objektua {
 
     startBehavior(){
         if(this.loop.length > 0){
-            if(!Window.mapa.cutscene){
+            if(!window.mapa.cutscene){
                 const funtzioa =(e)=>{
                     if(e.detail == this){
                         this.loopindex ++
@@ -182,9 +204,9 @@ class Pertsona extends Objektua {
     }
 
     talk(){
-        if(!Window.mapa.cutscene){
+        if(!window.mapa.cutscene){
             if (this.textua){
-                Window.textua.write(this.textua)
+                window.textua.write(this.textua)
             }
         }
     }

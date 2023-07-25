@@ -19,24 +19,63 @@ class Mapa {
         })
     }
     marraztubera(ctx, pertsona){
-        let x = grid(10.5) - pertsona.xx
-        let y = grid(6) - pertsona.yy
+
+        let centerY = grid(7);
+        let centerX = grid(11);
+
+        if(window.mapa.imageDown.height > grid (15)){
+            if (pertsona.yy > window.mapa.imageDown.height - grid(8)){
+                centerY = grid(15)-(window.mapa.imageDown.height - pertsona.yy);
+            } else if (pertsona.yy < grid(7)){
+                centerY = pertsona.yy;
+            }
+        }
+
+        if (window.mapa.imageDown.width > grid(22)){
+            if (pertsona.xx > window.mapa.imageDown.width - grid(11)){
+                centerX = grid(22)-(window.mapa.imageDown.width - pertsona.xx);
+            } else if (pertsona.xx < grid(11)){
+                centerX = pertsona.xx
+            }
+        }
+
+        let x = centerX - pertsona.xx
+        let y = centerY - pertsona.yy
         ctx.drawImage(this.imageDown, x, y)
     }
     marraztugora(ctx, pertsona){
-        let x = grid(10.5) - pertsona.xx
-        let y = grid(6) - pertsona.yy
+        let centerY = grid(7);
+        let centerX = grid(11);
+
+        if(window.mapa.imageDown.height > grid (15)){
+            if (pertsona.yy > window.mapa.imageDown.height - grid(8)){
+                centerY = grid(15)-(window.mapa.imageDown.height - pertsona.yy);
+            } else if (pertsona.yy < grid(7)){
+                centerY = pertsona.yy;
+            }
+        }
+
+        if (window.mapa.imageDown.width > grid(22)){
+            if (pertsona.xx > window.mapa.imageDown.width - grid(11)){
+                centerX = grid(22)-(window.mapa.imageDown.width - pertsona.xx);
+            } else if (pertsona.xx < grid(11)){
+                centerX = pertsona.xx
+            }
+        }
+
+        let x = centerX - pertsona.xx
+        let y = centerY - pertsona.yy
         try{
             ctx.drawImage(this.imageUp, x, y)
         }catch{}
     }
     startCutscene(list){
-        Window.mapa.objektuak.protagonista.kontrolatua = false;
+        window.mapa.objektuak.protagonista.kontrolatua = false;
         this.cutscene = true;
         let dir = list[this.cutsceneindex].dir
         let denbora = list[this.cutsceneindex].denbora
         let textua = list[this.cutsceneindex].textua
-        let who = Window.mapa.objektuak[list[this.cutsceneindex].who]
+        let who = window.mapa.objektuak[list[this.cutsceneindex].who]
         const funtzioa =(e)=>{
             if(e.detail.izena == who.izena){
                 this.cutsceneindex ++
@@ -45,7 +84,7 @@ class Mapa {
                 } else {
                     this.cutscene = false;
                     this.cutsceneindex = 0;
-                    Window.mapa.objektuak.protagonista.kontrolatua = true;
+                    window.mapa.objektuak.protagonista.kontrolatua = true;
                 }
                 document.removeEventListener('bukatuta', funtzioa)
             }
@@ -56,7 +95,7 @@ class Mapa {
         } else if (list[this.cutsceneindex].type == 'geldi'){
             who.geldi(denbora, dir)
         } else if (list[this.cutsceneindex].type == 'hitzein'){
-            Window.textua.write(textua)
+            window.textua.write(textua)
         }
     }
     set cutscenes(cutscn){

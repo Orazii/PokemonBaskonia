@@ -1,5 +1,5 @@
 (function(){
-    Window.mapak = {}
+    window.mapak = {}
     const overworld = new Overworld({
         pantaia: document.querySelector('.jolas-edukiontzia').querySelector('#jolasa')
     })
@@ -11,7 +11,7 @@
         let maps = jsonfile.mapak
         
         Object.keys(maps).forEach(key => {
-            Window.mapak[key] = new Mapa({
+            window.mapak[key] = new Mapa({
                 srcDOWN: maps[key].srcDOWN,
                 srcUP: maps[key].srcUP,
                 okupatuta: maps[key].okupatuta,
@@ -21,10 +21,10 @@
                 izena: key,
             })
             if(maps[key].cutscenes){
-                Window.mapak[key].cutscenes = maps[key].cutscenes;
+                window.mapak[key].cutscenes = maps[key].cutscenes;
             }
             Object.keys(maps[key].objektuak).forEach(objektua => {
-                Window.mapak[key].objektuak[objektua] = new Pertsona({
+                window.mapak[key].objektuak[objektua] = new Pertsona({
                     src: maps[key].objektuak[objektua].skin,
                     x: maps[key].objektuak[objektua].x,
                     y: maps[key].objektuak[objektua].y,
@@ -41,16 +41,16 @@
             method: 'GET',
         })
         let jsonfile = await response.json()
-        Window.mapa = Window.mapak[jsonfile.mapa]
+        window.mapa = window.mapak[jsonfile.mapa]
 
-        Object.keys(Window.mapak).forEach(map => {
-            Window.mapak[map].objektuak.protagonista = new Pertsona({
+        Object.keys(window.mapak).forEach(map => {
+            window.mapak[map].objektuak.protagonista = new Pertsona({
                 src: jsonfile.protagonista.skin,
                 kontrolatua: true,
                 izena: jsonfile.protagonista.izena 
             })
         })
-        Window.mapa.objektuak.protagonista = new Pertsona({
+        window.mapa.objektuak.protagonista = new Pertsona({
             src: jsonfile.protagonista.skin,
             x: jsonfile.protagonista.x,
             y: jsonfile.protagonista.y,
@@ -58,13 +58,13 @@
             kontrolatua: true,
             izena: jsonfile.protagonista.izena 
         })
-        Window.saved = {
+        window.saved = {
             dominak: jsonfile.dominak,
             denbora: jsonfile.denbora
         }
-        Window.marraztu = []
+        window.marraztu = []
         let denborakontadorea =()=>{
-            Window.saved.denbora += 1;
+            window.saved.denbora += 1;
             setTimeout(()=>{
                 denborakontadorea()
             }, 1000)

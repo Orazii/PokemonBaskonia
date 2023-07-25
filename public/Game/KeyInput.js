@@ -1,15 +1,15 @@
 class KeyInput {
     constructor(){
         this.funtzioa = (e)=>{
-            if(!Window.mapa.cutscene){
+            if(!window.mapa.cutscene){
                 if(e.key == 's'){
-                    if(Window.menu.opened){
-                        Window.menu.pick()
+                    if(window.menu.opened){
+                        window.menu.pick()
                     } else {
                         //protagonista non eta zer direkziotan dago
-                        this.dir = Window.mapa.objektuak.protagonista.direkzioa
-                        this.x = Window.mapa.objektuak.protagonista.xx
-                        this.y = Window.mapa.objektuak.protagonista.yy
+                        this.dir = window.mapa.objektuak.protagonista.direkzioa
+                        this.x = window.mapa.objektuak.protagonista.xx
+                        this.y = window.mapa.objektuak.protagonista.yy
                         let x;
                         let y;
                         let dir;
@@ -31,7 +31,7 @@ class KeyInput {
                             dir = 'gora'
                         }
                         //norbait protagonistaren ondoan badago hitz egin
-                        let objects = Object.values(Window.mapa.objektuak)
+                        let objects = Object.values(window.mapa.objektuak)
                         objects.forEach(object =>{
                             if (x == object.xx && y == object.yy){
                                 object.direkzioa = dir
@@ -43,11 +43,11 @@ class KeyInput {
                     }
     
                 } else if (e.key == 'x'){
-                    if(Window.menu.opened){
-                        Window.menu.close();
+                    if(window.menu.opened){
+                        window.menu.close();
                         
                     } else {
-                        Window.menu.open();
+                        window.menu.open();
                     }
                 }
             }

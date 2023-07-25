@@ -21,15 +21,13 @@ class Overworld {
             jolasedukiontzia.style.transform = `scale(${scale})`;
 
             this.ctx.clearRect(0, 0, this.pantaia.width, this.pantaia.height)
-            let objects = Object.values(Window.mapa.objektuak)
+            let objects = Object.values(window.mapa.objektuak)
             objects.sort(function(a,b){return a.y-b.y})
-            console.log(`[${Window.mapa.objektuak.protagonista.x},${Window.mapa.objektuak.protagonista.y}]`, Window.mapa.cutscenes, `[${Window.mapa.objektuak.protagonista.x},${Window.mapa.objektuak.protagonista.y}]` in Window.mapa.cutscenes )
-            if(`[${Window.mapa.objektuak.protagonista.x},${Window.mapa.objektuak.protagonista.y}]` in Window.mapa.cutscenes){
+            if(`[${window.mapa.objektuak.protagonista.x},${window.mapa.objektuak.protagonista.y}]` in window.mapa.cutscenes){
                 let funtzioa =(e)=>{
-                    if(e.detail == Window.mapa.objektuak.protagonista){
-                        if(!Window.mapa.cutscene){
-                            console.log('stargting cutscene')
-                            Window.mapa.startCutscene(Window.mapa.cutscenes[`[${Window.mapa.objektuak.protagonista.x},${Window.mapa.objektuak.protagonista.y}]`])
+                    if(e.detail == window.mapa.objektuak.protagonista){
+                        if(!window.mapa.cutscene){
+                            window.mapa.startCutscene(window.mapa.cutscenes[`[${window.mapa.objektuak.protagonista.x},${window.mapa.objektuak.protagonista.y}]`])
                         }
                         document.removeEventListener('bukatuta', funtzioa)
                     }
@@ -37,25 +35,25 @@ class Overworld {
                 document.addEventListener('bukatuta', funtzioa)
             }
             
-            if(`[${Window.mapa.objektuak.protagonista.x},${Window.mapa.objektuak.protagonista.y}]` in Window.mapa.mapchanges){
-                if(!Window.mapa.cutscene){
-                    Window.mapchange.changemap(Window.mapa.mapchanges[`[${Window.mapa.objektuak.protagonista.x},${Window.mapa.objektuak.protagonista.y}]`])
+            if(`[${window.mapa.objektuak.protagonista.x},${window.mapa.objektuak.protagonista.y}]` in window.mapa.mapchanges){
+                if(!window.mapa.cutscene){
+                    window.mapchange.changemap(window.mapa.mapchanges[`[${window.mapa.objektuak.protagonista.x},${window.mapa.objektuak.protagonista.y}]`])
                 }
             }
 
             objects.forEach(object =>{
                 object.update()
-                object.mugitu(Window.directionInput.direkzioa())
+                object.mugitu(window.directionInput.direkzioa())
             })
 
-            Window.mapa.marraztubera(this.ctx, Window.mapa.objektuak.protagonista)
+            window.mapa.marraztubera(this.ctx, window.mapa.objektuak.protagonista)
 
             objects.forEach(object =>{
-                object.marraztu(this.ctx, Window.mapa.objektuak.protagonista)
+                object.marraztu(this.ctx, window.mapa.objektuak.protagonista)
             })
-            Window.mapa.marraztugora(this.ctx, Window.mapa.objektuak.protagonista)
+            window.mapa.marraztugora(this.ctx, window.mapa.objektuak.protagonista)
             requestAnimationFrame(pausoa)
-            Window.marraztu.forEach((element)=>{
+            window.marraztu.forEach((element)=>{
                 element.marraztu(this.ctx)
             })
         }
@@ -63,14 +61,14 @@ class Overworld {
     }
 
     init() {
-        Window.mapa.init()
-        Window.directionInput = new DirectionInput();
-        Window.directionInput.init();
-        Window.keyInput = new KeyInput();
-        Window.keyInput.init()
-        Window.textua = new Textua({ctx: this.ctx});
-        Window.menu = new Menu({});
-        Object.values(Window.mapak).forEach(mapa => {
+        window.mapa.init()
+        window.directionInput = new DirectionInput();
+        window.directionInput.init();
+        window.keyInput = new KeyInput();
+        window.keyInput.init()
+        window.textua = new Textua({ctx: this.ctx});
+        window.menu = new Menu({});
+        Object.values(window.mapak).forEach(mapa => {
             Object.values(mapa.objektuak).forEach(objektu=>{
                 objektu.startBehavior()
             })

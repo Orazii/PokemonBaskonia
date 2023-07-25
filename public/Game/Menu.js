@@ -30,14 +30,14 @@ class Menu {
         })
     };
     open(){
-        Window.marraztu.push(this)
+        window.marraztu.push(this)
         this.opened = true
-        Window.mapa.objektuak.protagonista.kontrolatua = false
+        window.mapa.objektuak.protagonista.kontrolatua = false
     }
     close(){
-        Window.marraztu.splice(Window.marraztu.indexOf(this), 1)
+        window.marraztu.splice(window.marraztu.indexOf(this), 1)
         this.opened = false
-        Window.mapa.objektuak.protagonista.kontrolatua = true
+        window.mapa.objektuak.protagonista.kontrolatua = true
     }
     marraztu(ctx){
         let x = 277
@@ -64,10 +64,10 @@ class Menu {
     pick(){
         this.close()
         let aukera = this.content[this.selected];
-        if(this == Window.menu){
+        if(this == window.menu){
             if (aukera == 'GORDE'){
-                Window.save = new Save({});
-                Window.save.init();
+                window.save = new Save({});
+                window.save.init();
             }
         }  
         return aukera      

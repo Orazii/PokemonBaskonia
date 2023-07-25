@@ -20,6 +20,6 @@ drawSquare=(x, y, width, height, img, ctx)=>{
 }
 
 marrazturemove=(a)=>{
-    Window.marraztu.splice(Window.marraztu.indexOf(a), 1)
+    window.marraztu.splice(window.marraztu.indexOf(a), 1)
 
 }

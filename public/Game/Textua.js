@@ -9,14 +9,14 @@ class Textua {
         this.background.src = config.src || './images/TextBox.png'
     }
     remove(){
-        Window.mapa.cutscene = false;
+        window.mapa.cutscene = false;
         this.ctx.clearRect(0, 0, this.pantaia.width, this.pantaia.height)
         const event = new CustomEvent('bukatuta')
         document.dispatchEvent(event)
     }
     write(text, erantzuna = [], callback =()=>{}){
-        Window.mapa.objektuak.protagonista.mugitzen = false;
-        Window.mapa.cutscene = true;
+        window.mapa.objektuak.protagonista.mugitzen = false;
+        window.mapa.cutscene = true;
         let sentences = text.length
         let sentence = 0
         let erantzunapick;
@@ -43,7 +43,7 @@ class Textua {
                     if (sentence < sentences){
                         this.esaldia(text[sentence])
                     } else {
-                        Window.keyInput.init()
+                        window.keyInput.init()
                         document.removeEventListener('keydown', funtzioa)
                         document.removeEventListener('keyup', keyup)
                         if(erantzuna.length>0){
@@ -78,7 +78,7 @@ class Textua {
         console.log(text)
 
         this.done = false
-        Window.mapa.cutscene = true;
+        window.mapa.cutscene = true;
         this.ctx.drawImage(this.background, 0, 0)
         this.ctx.font =  `12.00px pokemon`
         document.addEventListener('deletetext', ()=>{
