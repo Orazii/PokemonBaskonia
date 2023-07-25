@@ -17,6 +17,45 @@ class Textua {
     write(text, erantzuna = [], callback =()=>{}){
         window.mapa.objektuak.protagonista.mugitzen = false;
         window.mapa.cutscene = true;
+        console.log(text)
+
+        let newText = [];
+        text.forEach(sentence => {
+            console.log(sentence)
+
+            sentence = sentence.split(" ")
+
+            console.log(sentence)
+
+            let pixelCount = 0;
+            let beginCut = 0;
+
+            for (let i = 0;  i < sentence.length; i ++){
+                console.log(i)
+                sentence[i].split("").forEach(letter=>{
+                    if (letter == 'i' || letter == 'l' || letter == ' '  || letter == '.' || letter == ';'|| letter == ',' ){
+                        pixelCount += 3
+                    } else if (letter == 'f' || letter == 'j'|| letter == 'l'|| letter == 'n'|| letter == 'r'|| letter == 's'|| letter == 't'|| letter == 'k'){
+                        pixelCount+=5
+                    } else {
+                        pixelCount += 6;
+                    }
+                })
+                console.log(pixelCount)
+                if (pixelCount > 335){
+                    pixelCount -= 335;
+                    newText.push(sentence.slice(beginCut, i).join(" "))
+                    beginCut = i;
+                }
+                pixelCount += 3;
+            }
+            newText.push(sentence.slice(beginCut).join(" "))
+        })
+
+        console.log(newText)
+
+        text = newText;
+
         let sentences = text.length
         let sentence = 0
         let erantzunapick;
@@ -89,7 +128,12 @@ class Textua {
             let timeout = setTimeout(()=>{
                 if(text[i]){
                     writeletter()
-                    this.ctx.fillText(text[i], t, 19)
+                    //itzala
+                    this.ctx.fillStyle = '#c2c2c2';
+                    this.ctx.fillText(text[i], t+1 , 23)
+                    //letra
+                    this.ctx.fillStyle= '#3d3d3d';
+                    this.ctx.fillText(text[i], t, 22)
                     if (text[i] == 'i' || text[i] == 'l' || text[i] == ' '  || text[i] == '.' || text[i] == ';'|| text[i] == ',' ){
                         t += 3
                     } else if (text[i] == 'f' || text[i] == 'j'|| text[i] == 'l'|| text[i] == 'n'|| text[i] == 'r'|| text[i] == 's'|| text[i] == 't'|| text[i] == 'k'){

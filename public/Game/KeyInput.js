@@ -2,7 +2,6 @@ class KeyInput {
     constructor(){
         this.funtzioa = (e)=>{
             if(!window.mapa.cutscene){
-                console.log(e.key)
                 if(e.key == 'z'){
                     if(window.menu.opened){
                         window.menu.pick()

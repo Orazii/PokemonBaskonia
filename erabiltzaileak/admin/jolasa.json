@@ -1,12 +1,12 @@
 {
-  "mapa": "mapa",
+  "mapa": "Etxea",
   "protagonista": {
     "izena": "admin",
     "skin": "protagonista-mutila",
-    "dir": "bera",
-    "x": 31,
-    "y": 55
+    "dir": "gora",
+    "x": "3",
+    "y": 7
   },
   "dominak": [],
-  "denbora": 645
+  "denbora": 668
 }
